@@ -1,0 +1,22 @@
+API DESIGN PRACTICE (Brand, Color, Size)
+
+// create a shirt
+POST api/shirts
+
+// read all the shirts
+GET api/shirts
+
+// read a particular shirt
+GET api/shirts/{id}
+
+// read a shirt that is of a particular size
+GET api/brands/{name}/sizes/{size}
+
+// read a shirt that is of a particular size and color
+GET api/brands/{name}/colors/{color}/sizes/{size}
+
+// update a shirt
+PUT api/shirts
+
+// delete a shirt
+DEL api/shirts/{id}
