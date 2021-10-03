@@ -7,38 +7,34 @@ using System.Threading.Tasks;
 namespace PlatformDemo.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {
         [HttpGet]
-        [Route("api/tickets")]
         public IActionResult Get()
         {
             return Ok("Reading all the tickets");
         }
 
-        [HttpGet]
-        [Route("api/tickets/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int Id)
         {
             return Ok($"Reading ticket #{Id}");
         }
 
         [HttpPost]
-        [Route("api/tickets")]
-        public IActionResult Create(int Id)
+        public IActionResult Create()
         {
             return Ok("Creating a ticket");
         }
 
         [HttpPut]
-        [Route("api/tickets")]
-        public IActionResult Update(int Id)
+        public IActionResult Update()
         {
             return Ok("Updating a ticket");
         }
 
-        [HttpDelete]
-        [Route("api/tickets/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
             return Ok("Deleting a ticket");
