@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatformDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace PlatformDemo.Controllers
         }
 
         /// <summary>
-        /// e.g. request: api/projects/{pid}/tickets?tid={tid}
+        /// e.g. request: https://localhost:5001/api/projects/456/tickets?tid=44&title=MyTitle&Description=MyDesc
         /// </summary>
         /// <param name="pid">Comes in the route</param>
         /// <param name="tid">jComes in the url query</param>
@@ -31,20 +32,21 @@ namespace PlatformDemo.Controllers
         [HttpGet]
         // here, route must start with /api to override class level attribute
         [Route("/api/projects/{pid}/tickets")]
-        public IActionResult GetProjectTicket(int pid, [FromQuery] int tid)
+        // by default, .net core will search complex types (i.e. Ticket) in the Body so,
+        // we must indicate that it comes in URL query params
+        public IActionResult GetProjectTicket([FromQuery] Ticket ticket)
         {
-            // By default .Net core will search tid in the following sequence:
-            // 1. Form Fields
-            // 2. Request Body
-            // 3. Route data
-            // 4. URL Query string params
-
-            if (tid == 0)
+            if (ticket == null)
             {
-                return Ok($"Reading all tickets that belong to project #{pid}");
+                return BadRequest("Parameters are not provided properly!");
             }
 
-            return Ok($"Reading project #{pid}, ticket #{tid}");
+            if (ticket.TicketId == 0)
+            {
+                return Ok($"Reading all tickets that belong to project #{ticket.ProjectId}");
+            }
+
+            return Ok($"Reading project #{ticket.ProjectId}, ticket #{ticket.TicketId}, Title:{ticket.Title}, Desc: {ticket.Description}");
         }
 
         [HttpPost]
