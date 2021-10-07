@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatformDemo.Filters;
 using PlatformDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,17 @@ namespace PlatformDemo.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            // Authentication & authorization
+            // Generic validation
+            // Retrieve the input data (model biding)
+            // Data validation
+            // Application logic/data (developer focus on this area)
+            // Format output data
+            // Exception handling
+
+            // middlewares act globally (they cannot apply only to certain action methods)
+            // filters can be applied to specific action methods or be applied to global controllers
+
             return Ok("Reading all the tickets");
         }
 
@@ -24,7 +36,15 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Ticket ticket)
+        public IActionResult CreateV1([FromBody] Ticket ticket)
+        {
+            return Ok(ticket);
+        }
+
+        [HttpPost]
+        [Route("/api/v2/tickets")]
+        [Ticket_EnsureEnteredDate]
+        public IActionResult CreateV2([FromBody] Ticket ticket)
         {
             return Ok(ticket);
         }
