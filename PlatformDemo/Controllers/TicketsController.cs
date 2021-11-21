@@ -43,7 +43,7 @@ namespace PlatformDemo.Controllers
 
         [HttpPost]
         [Route("/api/v2/tickets")]
-        [Ticket_EnsureEnteredDate]
+        [Ticket_EnsureEnteredDate]  // we only enforce "EnsureEnteredDate" on version 2 of the API
         public IActionResult CreateV2([FromBody] Ticket ticket)
         {
             return Ok(ticket);

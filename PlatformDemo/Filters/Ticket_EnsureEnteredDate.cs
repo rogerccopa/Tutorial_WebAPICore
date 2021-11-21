@@ -12,12 +12,25 @@ namespace PlatformDemo.Filters
 
             var ticket = context.ActionArguments["ticket"] as Ticket;
 
-            if (ticket != null && !string.IsNullOrWhiteSpace(ticket.Owner) && ticket.EnteredDate.HasValue == false)
+            if (ticket != null && 
+                !string.IsNullOrWhiteSpace(ticket.Owner))
             {
-                // inticate the field key  "ticket" for the error
-                context.ModelState.AddModelError("ticket", "EnteredDate is required");
-                // short-circut the pipeline flow (AddErrorModel)
-                context.Result = new BadRequestObjectResult(context.ModelState);
+                if (ticket.EnteredDate.HasValue == false)
+                {
+                    // indicate the field key  "ticket" for the error
+                    context.ModelState.AddModelError("ticket", "EnteredDate is required");
+
+                    // short-circut the pipeline flow (AddErrorModel)
+                    // note: if we set/return a Result, that means we are short-circuiting the pipeline
+                    context.Result = new BadRequestObjectResult(context.ModelState);
+                }
+
+                if (ticket.DueDate.HasValue &&
+                    ticket.DueDate < ticket.EnteredDate)
+                {
+                    context.ModelState.AddModelError("ticket", "DueDate cannot be earlier than EnteredDate");
+                    context.Result = new BadRequestObjectResult(context.ModelState);
+                }
             }
         }
     }
