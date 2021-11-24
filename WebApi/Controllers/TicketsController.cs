@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PlatformDemo.Filters;
-using PlatformDemo.Models;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +40,6 @@ namespace PlatformDemo.Controllers
             return Ok(ticket);
         }
 
-        [HttpPost]
-        [Route("/api/v2/tickets")]
-        [Ticket_EnsureEnteredDate]  // we only enforce "EnsureEnteredDate" on version 2 of the API
-        public IActionResult CreateV2([FromBody] Ticket ticket)
-        {
-            return Ok(ticket);
-        }
-
         [HttpPut]
         public IActionResult Update(Ticket ticket)
         {
@@ -58,7 +49,7 @@ namespace PlatformDemo.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int Id)
         {
-            return Ok("Deleting a ticket");
+            return Ok($"Deleting ticket #{Id}");
         }
     }
 }
