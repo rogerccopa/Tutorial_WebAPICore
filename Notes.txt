@@ -1,0 +1,4 @@
+We created separate projects to decouple parts of the solution
+- Core: contains plain C# to define Models
+- DataStore.EF: contains only database related tasks
+- WebApi: contains only API interface
